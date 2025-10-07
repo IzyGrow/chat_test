@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+const { useEffect, useRef } = React;
 
 // ChatKit element tip tanımı
 interface ChatKitElement extends HTMLElement {
