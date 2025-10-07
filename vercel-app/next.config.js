@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-  env: {
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  },
+  // Next.js 14'te appDir artık default, experimental gerekli değil
+  // Environment variables otomatik olarak server-side'da kullanılabilir
 }
 
 module.exports = nextConfig
