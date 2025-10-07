@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
-import { validateEnvironment, getEnvironmentConfig } from '../../../lib/env';
+import { validateEnvironment, getEnvironmentConfig } from '../../lib/env';
 
 // Environment validation
 try {
@@ -9,9 +9,9 @@ try {
   console.error('Environment validation failed:', error);
 }
 
-const config = getEnvironmentConfig();
+const envConfig = getEnvironmentConfig();
 const openai = new OpenAI({
-  apiKey: config.openaiApiKey,
+  apiKey: envConfig.openaiApiKey,
 });
 
 export default async function handler(
