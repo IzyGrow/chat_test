@@ -2,18 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
 import formidable from 'formidable';
 import fs from 'fs';
-import { validateEnvironment, getEnvironmentConfig } from '../../lib/env';
 
-// Environment validation
-try {
-  validateEnvironment();
-} catch (error) {
-  console.error('Environment validation failed:', error);
-}
-
-const envConfig = getEnvironmentConfig();
 const openai = new OpenAI({
-  apiKey: envConfig.openaiApiKey,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 // API route handler
@@ -27,7 +18,6 @@ export default async function handler(
 
   // API key kontrolü
   if (!process.env.OPENAI_API_KEY) {
-    console.error('OPENAI_API_KEY environment variable is not set');
     return res.status(500).json({ 
       error: 'Server configuration error',
       details: 'OpenAI API key is not configured'
