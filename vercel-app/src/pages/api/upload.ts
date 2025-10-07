@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
 import formidable from 'formidable';
 import fs from 'fs';
-import { validateEnvironment, getEnvironmentConfig } from '../../../lib/env';
+import { validateEnvironment, getEnvironmentConfig } from '../../lib/env';
 
 // Environment validation
 try {
