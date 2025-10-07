@@ -11,9 +11,9 @@ try {
   console.error('Environment validation failed:', error);
 }
 
-const config = getEnvironmentConfig();
+const envConfig = getEnvironmentConfig();
 const openai = new OpenAI({
-  apiKey: config.openaiApiKey,
+  apiKey: envConfig.openaiApiKey,
 });
 
 // API route handler
