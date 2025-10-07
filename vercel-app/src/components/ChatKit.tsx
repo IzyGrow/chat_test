@@ -90,8 +90,16 @@ export const ChatKit: React.FC<ChatKitProps> = ({ clientToken, className }) => {
 
     // ChatKit script yüklenene kadar bekle
     const initChatKit = () => {
-      if (typeof window !== 'undefined' && (window as any).ChatKit && chatKit) {
-        chatKit.setOptions(options);
+      if (typeof window !== 'undefined' && chatKit) {
+        // ChatKit script yüklenmemişse basit bir fallback göster
+        if (!(window as any).ChatKit) {
+          console.warn('ChatKit script not loaded, using fallback');
+          return;
+        }
+        
+        if (typeof chatKit.setOptions === 'function') {
+          chatKit.setOptions(options);
+        }
       } else {
         setTimeout(initChatKit, 100);
       }
