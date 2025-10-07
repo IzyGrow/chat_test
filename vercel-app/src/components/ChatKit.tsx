@@ -1,13 +1,22 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import * as React from 'react';
+
+// ChatKit element tip tanımı
+interface ChatKitElement extends HTMLElement {
+  setOptions(options: any): void;
+}
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
       'openai-chatkit': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
+        React.HTMLAttributes<ChatKitElement>,
+        ChatKitElement
+      >;
+      script: React.DetailedHTMLProps<
+        React.ScriptHTMLAttributes<HTMLScriptElement>,
+        HTMLScriptElement
       >;
     }
   }
@@ -19,7 +28,7 @@ interface ChatKitProps {
 }
 
 export const ChatKit: React.FC<ChatKitProps> = ({ clientToken, className }) => {
-  const chatKitRef = useRef<HTMLElement>(null);
+  const chatKitRef = useRef<ChatKitElement | null>(null);
 
   useEffect(() => {
     const chatKit = chatKitRef.current;
@@ -80,7 +89,7 @@ export const ChatKit: React.FC<ChatKitProps> = ({ clientToken, className }) => {
 
     // ChatKit script yüklenene kadar bekle
     const initChatKit = () => {
-      if (typeof window !== 'undefined' && (window as any).ChatKit) {
+      if (typeof window !== 'undefined' && (window as any).ChatKit && chatKit) {
         chatKit.setOptions(options);
       } else {
         setTimeout(initChatKit, 100);
