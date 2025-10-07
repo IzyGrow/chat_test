@@ -1,73 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import { ChatKit } from '../components/ChatKit';
+import { SimpleChat } from '../components/SimpleChat';
 
 export default function Home() {
-  const [clientToken, setClientToken] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    // Sayfa yüklendiğinde session oluştur
-    createSession();
-  }, []);
-
-  const createSession = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/chatkit/session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (response.status === 500 && errorData.details?.includes('API key')) {
-          throw new Error('OpenAI API anahtarı yapılandırılmamış. Lütfen sistem yöneticisine başvurun.');
-        }
-        throw new Error(errorData.error || 'Session oluşturulamadı');
-      }
-
-      const data = await response.json();
-      setClientToken(data.client_secret);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Bilinmeyen hata');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">ChatBot başlatılıyor...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            <strong className="font-bold">Hata: </strong>
-            <span className="block sm:inline">{error}</span>
-          </div>
-          <button
-            onClick={createSession}
-            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Tekrar Dene
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -116,12 +51,7 @@ export default function Home() {
                 </ul>
               </div>
               
-              {clientToken && (
-                <ChatKit 
-                  clientToken={clientToken} 
-                  className="w-full"
-                />
-              )}
+              <SimpleChat className="w-full" />
             </div>
           </div>
         </main>
