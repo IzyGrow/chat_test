@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
-import { validateEnvironment, getEnvironmentConfig } from '../../lib/env';
+import { validateEnvironment, getEnvironmentConfig } from '../../../lib/env';
 
 // Environment validation
 try {
